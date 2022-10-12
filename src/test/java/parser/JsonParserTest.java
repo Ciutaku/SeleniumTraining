@@ -12,10 +12,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class JsonParserTest {
 
+    private JsonParser parser;
+    public static final String CART_NAME = "andrew-cart";
+
+    @BeforeEach
+    public void init() {
+        parser = new JsonParser();
+    }
+
     @Test
-    @Tag("ParserTests")
     void testWriteToFile() {
-        JsonParser parser = new JsonParser();
         parser.writeToFile(new Cart("testCartFile"));
         File testCartFile = new File("src/main/resources/testCartFile.json");
         assertTrue(testCartFile.exists());
@@ -23,29 +29,22 @@ class JsonParserTest {
 
     @Test
     @Disabled
-    @Tag("ParserTests")
     void testReadFromFile() {
-        String expectedCartName ="predefinedCart";
-        double expectedTotalPrice = 38445.479999999996;
-        JsonParser parser = new JsonParser();
-        File predefinedCart = new File("src/main/resources/predefinedCart.json");
-        Cart cart = parser.readFromFile(predefinedCart);
-        Assertions.assertAll("Return details of predefinedCart",
-                () -> assertEquals(expectedCartName, cart.getCartName()),
-                () -> assertEquals(expectedTotalPrice, cart.getTotalPrice()));
+        String path = "src/main/resources/" + CART_NAME + ".json";
+        Cart cart = parser.readFromFile(new File(path));
+        Assertions.assertAll(
+                () -> assertEquals(CART_NAME, cart.getCartName()),
+                () -> assertEquals(38445.479999999996, cart.getTotalPrice()));
     }
 
     @ParameterizedTest
-    @Tag("ParserTests")
     @ValueSource(strings = {"badfileone", "badfiletwo", "badfilethree", "badfilefour", "badfilefive"})
     public void testFileNotFoundException(String fileName) {
-        JsonParser parser = new JsonParser();
         final File nonExistingFile = new File(fileName);
         assertThrows(NoSuchFileException.class, () -> parser.readFromFile(nonExistingFile));
     }
 
     @AfterAll
-    @Tag("ParserTests")
     static void cleanUp() {
         File testCartFile = new File("src/main/resources/testCartFile.json");
         if (testCartFile.exists()) {

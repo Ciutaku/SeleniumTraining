@@ -1,20 +1,25 @@
 package shop;
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class VirtualItemTest {
-    VirtualItem virtualItem = new VirtualItem();
-    double testSize = 90.00;
-    double expectedTestSize = 90.00;
+public class VirtualItemTest {
+
+    private VirtualItem virtualTestItem;
+    public static final double EXPECT_SIZE_ON_DISK = 90.00;
+
+    @BeforeEach
+    void prepareVirtualItemTestData() {
+        virtualTestItem = new VirtualItem();
+        virtualTestItem.setSizeOnDisk(EXPECT_SIZE_ON_DISK);
+    }
 
     @Test
-    @Tag("Items")
-    void testGetSizeOnDisk() {
-        virtualItem.setSizeOnDisk(testSize);
-        assertTrue(virtualItem.toString().contains("Size on disk: " + expectedTestSize));
+    void testToStringSizeOnDisk() {
+        assertTrue(virtualTestItem.toString().contains("Size on disk: " + EXPECT_SIZE_ON_DISK));
     }
 }

@@ -2,21 +2,25 @@ package shop;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RealItemTest {
+public class RealItemTest {
 
-    RealItem realItem = new RealItem();
-    double testWeight = 90.00;
-    double expectedTestWeight = 90.00;
+    private RealItem realTestItem;
+    public static final double EXPECT_WEIGHT = 90.00;
+
+    @BeforeEach
+    void prepareRealItemTestData() {
+        realTestItem = new RealItem();
+        realTestItem.setWeight(EXPECT_WEIGHT);
+    }
 
     @Test
-    @Tag("Items")
-    void testGetWeight() {
-        realItem.setWeight(testWeight);
-        assertTrue(realItem.toString().contains("Weight: "+ expectedTestWeight));
+    void testToStringWeight() {
+        assertTrue(realTestItem.toString().contains("Weight: " + EXPECT_WEIGHT));
     }
 }
