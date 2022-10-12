@@ -11,45 +11,45 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CartTest {
 
-    private String cartName = "testCart";
-    private Cart cart;
     private RealItem realItem;
-    private VirtualItem virtualItem;
 
+    private VirtualItem virtualItem;
 
     @BeforeEach
     @Tag("CartTests")
-    void initCart() {
-        this.cart = new Cart(cartName);
-    }
-
-    @Test
-    @Tag("CartTests")
-    void addRealItem() {
-        realItem.setName("realItemName");
-        realItem.setPrice(199);
-        realItem.setWeight(900);
-        cart.addRealItem(realItem);
-        Assertions.assertAll("Should return all set details from real item within the cart",
-                () -> assertEquals("realItemName", ),
-                () -> assertEquals("199", ),
-                () -> assertEquals("900", );
-    }
-
-    @Test
-    @Tag("CartTests")
-    void addVirtualItem() {
+    void initItems() {
+        VirtualItem virtualItem = new VirtualItem();
         virtualItem.setName("virtualItemName");
-        virtualItem.setPrice(99);
-        virtualItem.setSizeOnDisk(8000);
-        cart.addVirtualItem(virtualItem);
+        virtualItem.setPrice(199.82);
+        virtualItem.setSizeOnDisk(900);
+        RealItem realItem = new RealItem();
+        realItem.setName("realItemName");
+        realItem.setPrice(199.82);
+        realItem.setWeight(900);
+        this.realItem = realItem;
+        this.virtualItem = virtualItem;
     }
 
-    @After
+    @Test
     @Tag("CartTests")
-    void cleanUp() {
-        cart.deleteRealItem(realItem);
-        cart.deleteVirtualItem(virtualItem);
+    void testTotalPriceAfterAdditionToCart() {
+        Cart cart = new Cart("testCart");
+        cart.addRealItem(realItem);
+        assertEquals(239.784, cart.getTotalPrice());
+        cart.addVirtualItem(virtualItem);
+        assertEquals(479.568, cart.getTotalPrice());
     }
 
+    @Test
+    @Tag("CartTests")
+    void testTotalPriceAfterRemovingFromCart() {
+        Cart cart = new Cart("testCart");
+        cart.addRealItem(realItem);
+        cart.addVirtualItem(virtualItem);
+        assertEquals(479.568, cart.getTotalPrice());
+        cart.deleteRealItem(realItem);
+        assertEquals(239.784, cart.getTotalPrice());
+        cart.deleteVirtualItem(virtualItem);
+        assertEquals(0, cart.getTotalPrice());
+    }
 }

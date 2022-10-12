@@ -1,5 +1,7 @@
 package shop;
 
+import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +17,6 @@ class RealItemTest {
     @Tag("Items")
     void testGetWeight() {
         realItem.setWeight(testWeight);
-        assertEquals(expectedTestWeight, realItem.getWeight());
+        assertTrue(realItem.toString().contains("Weight: "+ expectedTestWeight));
     }
 }

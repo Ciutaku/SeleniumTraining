@@ -15,6 +15,6 @@ class VirtualItemTest {
     @Tag("Items")
     void testGetSizeOnDisk() {
         virtualItem.setSizeOnDisk(testSize);
-       assertEquals(expectedTestSize, virtualItem.getSizeOnDisk());
+        assertTrue(virtualItem.toString().contains("Size on disk: " + expectedTestSize));
     }
 }

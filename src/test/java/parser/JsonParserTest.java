@@ -19,34 +19,37 @@ class JsonParserTest {
         parser.writeToFile(new Cart("testCartFile"));
         File testCartFile = new File("src/main/resources/testCartFile.json");
         assertTrue(testCartFile.exists());
-
     }
 
     @Test
     @Disabled
     @Tag("ParserTests")
     void testReadFromFile() {
+        String expectedCartName ="predefinedCart";
+        double expectedTotalPrice = 38445.479999999996;
         JsonParser parser = new JsonParser();
         File predefinedCart = new File("src/main/resources/predefinedCart.json");
-        parser.readFromFile(predefinedCart);
+        Cart cart = parser.readFromFile(predefinedCart);
+        Assertions.assertAll("Return details of predefinedCart",
+                () -> assertEquals(expectedCartName, cart.getCartName()),
+                () -> assertEquals(expectedTotalPrice, cart.getTotalPrice()));
     }
 
     @ParameterizedTest
     @Tag("ParserTests")
-    @ValueSource(strings = {"badfileone", "badfiletwo","badfilethree", "badfilefour", "badfilefive"})
+    @ValueSource(strings = {"badfileone", "badfiletwo", "badfilethree", "badfilefour", "badfilefive"})
     public void testFileNotFoundException(String fileName) {
         JsonParser parser = new JsonParser();
         final File nonExistingFile = new File(fileName);
-        Throwable exception = assertThrows(NoSuchFileException.class, () -> parser.readFromFile(nonExistingFile));
-
+        assertThrows(NoSuchFileException.class, () -> parser.readFromFile(nonExistingFile));
     }
+
     @AfterAll
     @Tag("ParserTests")
     static void cleanUp() {
         File testCartFile = new File("src/main/resources/testCartFile.json");
-        if(testCartFile.exists()) {
+        if (testCartFile.exists()) {
             testCartFile.delete();
         }
     }
-
 }
