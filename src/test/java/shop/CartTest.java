@@ -1,20 +1,15 @@
 package shop;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import org.testng.Assert;
 
 class CartTest {
 
     private RealItem realItem;
     private Cart cart;
 
-    @BeforeEach
+    @BeforeTest
     void initTestData() {
         cart = new Cart("testCart");
         realItem = new RealItem();
@@ -22,14 +17,14 @@ class CartTest {
         cart.addRealItem(realItem);
     }
 
-    @Test
+    @Test(groups = {"CartGroup"})
     void testCalculationAfterAddingRealItemToCart() {
-        assertEquals(120.0, cart.getTotalPrice());
+        Assert.assertEquals(120.0, cart.getTotalPrice());
     }
 
-    @Test
+    @Test(groups = {"CartGroup"})
     void testCalculationAfterRemovingRealItemFromCart() {
         cart.deleteRealItem(realItem);
-        assertEquals(0, cart.getTotalPrice());
+        Assert.assertEquals(0, cart.getTotalPrice());
     }
 }

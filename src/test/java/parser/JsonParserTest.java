@@ -1,50 +1,61 @@
 package parser;
 
-import org.junit.After;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.testng.annotations.*;
+import org.testng.asserts.SoftAssert;
 import shop.Cart;
 
 import java.io.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.*;
+
 
 class JsonParserTest {
 
     private JsonParser parser;
     public static final String CART_NAME = "andrew-cart";
+    @DataProvider(name = "badFilePaths")
+    public Object[][]createData1() {
+        return new Object[][] {
+                { "badfileone"},
+                { "badfiletwo"},
+                { "badfilethree"},
+                { "badfilefour"},
+                { "badfilefive"},
+        };
+    }
 
-    @BeforeEach
+
+    @BeforeTest
     public void init() {
         parser = new JsonParser();
     }
 
-    @Test
-    void testWriteToFile() {
-        parser.writeToFile(new Cart("testCartFile"));
-        File testCartFile = new File("src/main/resources/testCartFile.json");
+    @Parameters("CartFileName")
+    @Test(groups = {"JsonParserGroup"})
+    void testWriteToFile(String cartName) {
+        parser.writeToFile(new Cart(cartName));
+        File testCartFile = new File("src/main/resources/" + cartName + ".json");
         assertTrue(testCartFile.exists());
     }
 
-    @Test
-    @Disabled
+    @Test(groups = {"JsonParserGroup", "brokenTest"})
     void testReadFromFile() {
+        SoftAssert softAssert = new SoftAssert();
         String path = "src/main/resources/" + CART_NAME + ".json";
         Cart cart = parser.readFromFile(new File(path));
-        Assertions.assertAll(
-                () -> assertEquals(CART_NAME, cart.getCartName()),
-                () -> assertEquals(38445.479999999996, cart.getTotalPrice()));
+        softAssert.assertEquals(CART_NAME, cart.getCartName());
+        softAssert.assertEquals(38445.479999999996, cart.getTotalPrice());
+        softAssert.assertAll();
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"badfileone", "badfiletwo", "badfilethree", "badfilefour", "badfilefive"})
+
+    @Test (dataProvider = "badFilePaths")
     public void testFileNotFoundException(String fileName) {
         final File nonExistingFile = new File(fileName);
         assertThrows(NoSuchFileException.class, () -> parser.readFromFile(nonExistingFile));
     }
 
-    @AfterAll
+    @AfterTest
     static void cleanUp() {
         File testCartFile = new File("src/main/resources/testCartFile.json");
         if (testCartFile.exists()) {
