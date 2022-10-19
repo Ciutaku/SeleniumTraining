@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="TestSuite1" verbose="1" parallel="false">
+    <parameter name="CartFileName" value="testCartFile"/>
+    <test name="ParameterExample">
+        <classes>
+            <class name="parser.JsonParserTest"/>
+        </classes>
+    </test>
+</suite>
