@@ -13,17 +13,18 @@ class JsonParserTest {
 
     private JsonParser parser;
     public static final String CART_NAME = "andrew-cart";
+
+    @BeforeMethod
     @DataProvider(name = "badFilePaths")
-    public Object[][]createData1() {
-        return new Object[][] {
-                { "badfileone"},
-                { "badfiletwo"},
-                { "badfilethree"},
-                { "badfilefour"},
-                { "badfilefive"},
+    public Object[][] createData() {
+        return new Object[][]{
+                {"badfileone"},
+                {"badfiletwo"},
+                {"badfilethree"},
+                {"badfilefour"},
+                {"badfilefive"},
         };
     }
-
 
     @BeforeTest
     public void init() {
@@ -48,8 +49,7 @@ class JsonParserTest {
         softAssert.assertAll();
     }
 
-
-    @Test (dataProvider = "badFilePaths")
+    @Test(dataProvider = "badFilePaths")
     public void testFileNotFoundException(String fileName) {
         final File nonExistingFile = new File(fileName);
         assertThrows(NoSuchFileException.class, () -> parser.readFromFile(nonExistingFile));
