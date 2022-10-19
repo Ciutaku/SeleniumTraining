@@ -14,7 +14,6 @@ class JsonParserTest {
     private JsonParser parser;
     public static final String CART_NAME = "andrew-cart";
 
-    @BeforeMethod
     @DataProvider(name = "badFilePaths")
     public Object[][] createData() {
         return new Object[][]{
@@ -26,7 +25,7 @@ class JsonParserTest {
         };
     }
 
-    @BeforeTest
+    @BeforeMethod
     public void init() {
         parser = new JsonParser();
     }
