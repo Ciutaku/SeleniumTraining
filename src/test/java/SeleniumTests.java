@@ -1,16 +1,16 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.List;
 
 public class SeleniumTests {
 
-
-    private static String chromeDriverPath = "C:\\chromedriver_win32\\chromedriver.exe";
     private String name = "selenium.t";
     private String password = "Tester12345!";
     private String homePage = "https://passport.yandex.com/";
@@ -19,8 +19,8 @@ public class SeleniumTests {
 
 
     @BeforeAll
-    static void setChromeDriverPath() {
-        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+    static void setChromeDriverExecutable() {
+        WebDriverManager.getInstance(ChromeDriver.class).setup();
     }
 
     @BeforeEach
@@ -37,7 +37,8 @@ public class SeleniumTests {
         driver.findElement(By.id("passp-field-passwd")).sendKeys(password);
         driver.findElement(By.id("passp:sign-in")).click();
         Thread.sleep(2000); //temporary until I reach task with "Waits"
-        Assert.assertEquals(homePage, driver.getCurrentUrl());
+        driver.findElement(By.xpath("//*[@class='UserID-Avatar ']")).click();
+        Assertions.assertTrue(driver.getPageSource().contains(name));
     }
 
     @AfterEach
