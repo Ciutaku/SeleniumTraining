@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WaiterTests {
-    FluentWait<WebDriver> wait;
-    WebDriver driver;
+    private FluentWait<WebDriver> wait;
+    private WebDriver driver;
     private static final String DYNAMIC_DATA_LOADING_URL = "https://demo.seleniumeasy.com/dynamic-data-loading-demo.html";
     private static final String DOWNLOAD_PROGRESS_URL = "https://demo.seleniumeasy.com/bootstrap-download-progress-demo.html";
     private static final By SAVE_BUTTON = By.id("save");

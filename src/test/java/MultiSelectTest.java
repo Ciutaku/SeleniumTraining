@@ -22,7 +22,7 @@ public class MultiSelectTest {
 
     private static final String MULTI_SELECT_URL = "https://demo.seleniumeasy.com/basic-select-dropdown-demo.html";
     private static final By MULTI_SELECT = By.id("multi-select");
-    WebDriver driver;
+    private WebDriver driver;
 
     @BeforeAll
     static void setChromeDriverExecutable() {

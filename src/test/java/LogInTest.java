@@ -16,14 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LogInTest {
 
-    private static final By SUBNAME_ELEMENT = By.xpath("//*[contains (@class, 'Subname')]");
+    private static final By NOT_NOW_OPTION_TEXT = By.xpath("//*[contains (text(), 'Not now')]");
     private static final By LOGIN_FIELD = By.id("passp-field-login");
     private static final By SIGN_IN_BUTTON = By.id("passp:sign-in");
     private static final By PASSWORD_FIELD = By.id("passp-field-passwd");
-    private static final By USER_AVATAR = By.xpath("//*[@class='UserID-Avatar ']");
     private static final String PASSWORD = "Tester123456!";
     private static final String HOMEPAGE = "https://passport.yandex.com/";
-    WebDriver driver;
+    private WebDriver driver;
 
     @BeforeAll
     static void setChromeDriverExecutable() {
@@ -36,19 +35,19 @@ public class LogInTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
     }
+
     @ParameterizedTest
     @ValueSource(strings = {"selenium.t", "selenium.t2"})
-    void goToLoginPageAndLogIn(String testName) throws InterruptedException {
+    void goToLoginPageAndLogIn(String testName) {
         driver.get(HOMEPAGE);
         driver.findElement(LOGIN_FIELD).sendKeys(testName);
         driver.findElement(SIGN_IN_BUTTON).click();
-        Thread.sleep(1000);
         driver.findElement(PASSWORD_FIELD).sendKeys(PASSWORD);
         driver.findElement(SIGN_IN_BUTTON).click();
-        driver.findElement(USER_AVATAR).click();
-        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(SUBNAME_ELEMENT));
-        assertTrue(driver.findElement(SUBNAME_ELEMENT).isDisplayed());
+        new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(NOT_NOW_OPTION_TEXT));
+        assertTrue(driver.findElement(NOT_NOW_OPTION_TEXT).isDisplayed());
     }
+
     @AfterEach
     void cleanUp() {
         driver.quit();

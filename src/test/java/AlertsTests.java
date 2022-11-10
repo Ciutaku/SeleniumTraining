@@ -16,8 +16,8 @@ public class AlertsTests {
     private static final By PROMPT_BOX_BUTTON = By.xpath("//button[@onclick='myPromptFunction()']");
     private static final By CONFIRM_BOX_BUTTON = By.xpath("//button[@onclick='myConfirmFunction()']");
     private static final By CONFIRM_BOX_RESULT_TEXT = By.id("confirm-demo");
-    WebDriver driver;
-    Alert alert;
+    private WebDriver driver;
+    private Alert alert;
 
     @BeforeAll
     static void setChromeDriverExecutable() {

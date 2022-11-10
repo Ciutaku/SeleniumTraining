@@ -20,7 +20,7 @@ public class TableDemoTest {
     private static final By POSITION_CELL = By.xpath("//td[2]");
     private static final By OFFICE_CELL = By.xpath("//td[3]");
     private static final String TABLE_DEMO_URL = "https://demo.seleniumeasy.com/table-sort-search-demo.html";
-    WebDriver driver;
+    private WebDriver driver;
 
     @BeforeAll
     static void setChromeDriverExecutable() {
