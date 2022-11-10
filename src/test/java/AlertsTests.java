@@ -10,8 +10,12 @@ import java.time.Duration;
 
 public class AlertsTests {
 
-    private String alertDemoPage = "https://demo.seleniumeasy.com/javascript-alert-box-demo.html";
-    private String testNameText = "Test Name Text";
+    private static final By RESULT_TEXT = By.id("prompt-demo");
+    private static final String ALERT_DEMO_URL = "https://demo.seleniumeasy.com/javascript-alert-box-demo.html";
+    private static final String TEST_NAME_TEXT = "Test Name Text";
+    private static final By PROMPT_BOX_BUTTON = By.xpath("//button[@onclick='myPromptFunction()']");
+    private static final By CONFIRM_BOX_BUTTON = By.xpath("//button[@onclick='myConfirmFunction()']");
+    private static final By CONFIRM_BOX_RESULT_TEXT = By.id("confirm-demo");
     WebDriver driver;
     Alert alert;
 
@@ -29,31 +33,29 @@ public class AlertsTests {
 
     @Test
     void testAlertBoxTextResponse() {
-
-        driver.get(alertDemoPage);
-        driver.findElement(By.xpath("//button[@onclick='myPromptFunction()']")).click();
+        driver.get(ALERT_DEMO_URL);
+        driver.findElement(PROMPT_BOX_BUTTON).click();
         alert = driver.switchTo().alert();
-        alert.sendKeys(testNameText);
+        alert.sendKeys(TEST_NAME_TEXT);
         alert.accept();
-        WebElement resultText = driver.findElement(By.id("prompt-demo"));
-        Assertions.assertEquals("You have entered '" + testNameText + "' !", resultText.getText());
+        WebElement resultText = driver.findElement(RESULT_TEXT);
+        Assertions.assertEquals("You have entered '" + TEST_NAME_TEXT + "' !", resultText.getText());
     }
 
     @Test
     void testConfirmBoxCancel() {
-        driver.get(alertDemoPage);
-        driver.findElement(By.xpath("//button[@onclick='myConfirmFunction()']")).click();
+        driver.get(ALERT_DEMO_URL);
+        driver.findElement(CONFIRM_BOX_BUTTON).click();
         alert = driver.switchTo().alert();
         alert.dismiss();
-        WebElement cancelResult = driver.findElement(By.id("confirm-demo"));
+        WebElement cancelResult = driver.findElement(CONFIRM_BOX_RESULT_TEXT);
         Assertions.assertEquals("You pressed Cancel!", cancelResult.getText());
-
     }
 
     @Test
     void testConfirmBoxText() {
-        driver.get(alertDemoPage);
-        driver.findElement(By.xpath("//button[@onclick='myConfirmFunction()']")).click();
+        driver.get(ALERT_DEMO_URL);
+        driver.findElement(CONFIRM_BOX_BUTTON).click();
         alert = driver.switchTo().alert();
         Assertions.assertEquals("Press a button!", alert.getText());
     }
