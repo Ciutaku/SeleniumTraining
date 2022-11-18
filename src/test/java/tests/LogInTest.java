@@ -1,31 +1,26 @@
 package tests;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.WebDriver;
-import pages.HomePage;
+import pages.AccountPage;
+import pages.BaseTest;
 import pages.LoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class LogInTest {
-    private final WebDriver driver = WebDriverInit.getInstance();
 
+public class LogInTest extends BaseTest {
+
+    private static final String USERNAME = "selenium.t";
+    private static final String PASSWORD = "Tester123456!";
 
     @Test
     void goToLoginPageAndLogIn() {
         LoginPage loginPage = new LoginPage();
         loginPage.goToLogInPage();
-        loginPage.logInWithCredentials();
-        HomePage homePage = new HomePage();
-        homePage.clickAvatarButton();
-        homePage.switchToIframe(0);
-        assertTrue(homePage.subNameTextDisplayed());
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
+        AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
+        accountPage.clickAvatarButton();
+        accountPage.switchToIframe(0);
+        assertTrue(accountPage.isDisplayedSubname());
     }
 }
 
