@@ -16,11 +16,8 @@ public class LogInTest extends BaseTest {
     @Test
     void goToLoginPageAndLogIn() {
         LoginPage loginPage = new LoginPage();
-        loginPage.goToLogInPage();
         AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
-        accountPage.clickAvatarButton();
-        accountPage.switchToIframe(0);
-        assertTrue(accountPage.isDisplayedSubname());
+        assertTrue(accountPage.isAvatarDisplayed());
     }
 }
 

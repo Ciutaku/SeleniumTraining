@@ -12,12 +12,11 @@ public class LogOutTest extends BaseTest {
     private static final String PASSWORD = "Tester123456!";
 
     @Test
-    void logOut() {
+    void logOut(){
         LoginPage loginPage = new LoginPage();
-        loginPage.goToLogInPage();
         AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
         accountPage.clickAvatarButton();
         accountPage.signOut();
-        assertTrue(loginPage.isDisplayedPassField());
+        assertTrue(loginPage.isPassFieldDisplayed());
     }
 }

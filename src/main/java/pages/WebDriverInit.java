@@ -22,4 +22,10 @@ public class WebDriverInit {
         }
         return driver;
     }
+    public static void cleanUp() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
 }

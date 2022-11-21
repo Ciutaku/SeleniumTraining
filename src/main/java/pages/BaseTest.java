@@ -1,24 +1,18 @@
 package pages;
 
 import org.junit.jupiter.api.AfterEach;
-import org.openqa.selenium.WebDriver;
+import org.junit.jupiter.api.BeforeEach;
 
 public class BaseTest {
-    protected static WebDriver driver;
 
-    public BaseTest() {
-        driver = WebDriverInit.getDriver();
+    @BeforeEach
+    void goToLoginPage() {
+        LoginPage loginPage = new LoginPage();
+        loginPage.goToLogInPage();
     }
-
     @AfterEach
     void tearDown() {
-        BaseTest.cleanUp();
+        WebDriverInit.cleanUp();
     }
 
-    public static void cleanUp() {
-        if (driver != null) {
-            driver.quit();
-            driver = null;
-        }
-    }
 }
