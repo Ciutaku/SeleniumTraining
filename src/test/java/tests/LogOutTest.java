@@ -14,8 +14,7 @@ public class LogOutTest extends BaseTest {
     @Test
     void logOut(){
         LoginPage loginPage = new LoginPage();
-        loginPage.logIn(USERNAME, PASSWORD);
-        AccountPage accountPage = new AccountPage();
+        AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
         accountPage.clickAvatarButton();
         accountPage.signOut();
         assertTrue(loginPage.isPassFieldDisplayed());
