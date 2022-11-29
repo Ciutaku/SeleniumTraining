@@ -4,20 +4,25 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class AccountPage extends BasePage{
-    @FindBy (className = "Logout")
-    public WebElement SIGN_OUT_BUTTON;
-    @FindBy (className = "UserID-Account")
-    public WebElement AVATAR_BUTTON ;
+public class AccountPage extends BasePage {
+    @FindBy(className = "Logout")
+    private WebElement signOutButton;
 
-    public AccountPage(){
-        driver = WebDriverInit.getDriver();
+    @FindBy(className = "UserID-Account")
+    private WebElement avatarButton;
+
+    public AccountPage() {
+        super();
         PageFactory.initElements(driver, this);
     }
 
-    public void clickAvatarButton() { AVATAR_BUTTON.click(); }
+    public void clickAvatarButton() {
+        avatarButton.click();
+    }
 
-    public boolean isAvatarDisplayed() { return AVATAR_BUTTON.isDisplayed();}
+    public boolean isAvatarDisplayed() {
+        return avatarButton.isDisplayed();
+    }
 
     public void switchToIframe(int iframeIndex) {
         driver.switchTo().frame(iframeIndex);
@@ -25,7 +30,7 @@ public class AccountPage extends BasePage{
 
     public void signOut() {
         switchToIframe(0);
-        SIGN_OUT_BUTTON.click();
+        signOutButton.click();
         driver.switchTo().defaultContent();
     }
 }

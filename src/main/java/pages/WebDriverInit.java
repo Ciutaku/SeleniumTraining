@@ -10,10 +10,10 @@ public class WebDriverInit {
 
     private static WebDriver driver;
 
-    private WebDriverInit (){
-
+    private WebDriverInit() {
     }
-    public static WebDriver getDriver(){
+
+    public static WebDriver getDriver() {
         if (driver == null) {
             WebDriverManager.getInstance(ChromeDriver.class).setup();
             driver = new ChromeDriver();
@@ -22,6 +22,7 @@ public class WebDriverInit {
         }
         return driver;
     }
+
     public static void cleanUp() {
         if (driver != null) {
             driver.quit();

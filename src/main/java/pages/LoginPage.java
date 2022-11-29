@@ -5,29 +5,32 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage extends BasePage {
-    @FindBy (id = "passp-field-login")
-    public WebElement LOGIN_FIELD;
-    @FindBy (id = "passp:sign-in" )
-    public  WebElement SIGN_IN_BUTTON;
-    @FindBy (id = "passp-field-passwd")
-    public  WebElement PASSWORD_FIELD;
-    public  static final String URL = "https://passport.yandex.com/";
+    @FindBy(id = "passp-field-login")
+    private WebElement loginField;
 
-    public LoginPage(){
-        driver = WebDriverInit.getDriver();
+    @FindBy(id = "passp:sign-in")
+    private WebElement signInButton;
+
+    @FindBy(id = "passp-field-passwd")
+    private WebElement passwordField;
+
+    private static final String URL = "https://passport.yandex.com/";
+
+    public LoginPage() {
+        super();
         PageFactory.initElements(driver, this);
     }
 
     public AccountPage logIn(String username, String password) {
-        LOGIN_FIELD.sendKeys(username);
-        SIGN_IN_BUTTON.click();
-        PASSWORD_FIELD.sendKeys(password);
-        SIGN_IN_BUTTON.click();
+        loginField.sendKeys(username);
+        signInButton.click();
+        passwordField.sendKeys(password);
+        signInButton.click();
         return new AccountPage();
     }
 
     public boolean isPassFieldDisplayed() {
-        return PASSWORD_FIELD.isDisplayed();
+        return passwordField.isDisplayed();
     }
 
     public void goToLogInPage() {

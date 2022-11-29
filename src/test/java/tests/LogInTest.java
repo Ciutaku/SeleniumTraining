@@ -2,7 +2,6 @@ package tests;
 
 import org.junit.jupiter.api.Test;
 import pages.AccountPage;
-import pages.BaseTest;
 import pages.LoginPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -18,6 +17,14 @@ public class LogInTest extends BaseTest {
         LoginPage loginPage = new LoginPage();
         AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
         assertTrue(accountPage.isAvatarDisplayed());
+    }
+    @Test
+    void logOut() {
+        LoginPage loginPage = new LoginPage();
+        AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
+        accountPage.clickAvatarButton();
+        accountPage.signOut();
+        assertTrue(loginPage.isPassFieldDisplayed());
     }
 }
 
