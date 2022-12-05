@@ -17,6 +17,7 @@ public class LogInTest extends BaseTest {
         LoginPage loginPage = new LoginPage();
         AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
         assertTrue(accountPage.isAvatarDisplayed());
+        takeScreenshot("AccountPage");
     }
     @Test
     void logOut() {
