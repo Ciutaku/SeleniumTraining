@@ -11,7 +11,6 @@ import pages.WebDriverInit;
 import java.io.File;
 
 public class BaseTest {
-    private static final String SCREENSHOT_FOLDER_PATH = "/Users/costicadragu/Desktop/screenshots/";
 
     @BeforeEach
     void goToLoginPage() {
@@ -23,15 +22,4 @@ public class BaseTest {
     void tearDown() {
         WebDriverInit.cleanUp();
     }
-
-    public void takeScreenshot(String screenshotName) {
-        try {
-            File scrFile =
-                    ((TakesScreenshot) WebDriverInit.getDriver()).getScreenshotAs(OutputType.FILE);
-            FileUtils.copyFile(scrFile, new File(SCREENSHOT_FOLDER_PATH + screenshotName + ".png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 }
