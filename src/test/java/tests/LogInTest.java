@@ -20,20 +20,20 @@ public class LogInTest extends BaseTest {
     @AllureId("1")
     @Description("User goes to login page and logs in using valid credentials")
     void goToLoginPageAndLogIn() {
-            LoginPage loginPage = new LoginPage();
-            AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
-            assertTrue(accountPage.isAvatarDisplayed());
+        LoginPage loginPage = new LoginPage();
+        AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
+        assertTrue(accountPage.isAvatarDisplayed());
     }
 
     @Test
     @AllureId("2")
     @Description("User logs in and then logs out")
     void logOut() {
-            LoginPage loginPage = new LoginPage();
-            AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
-            accountPage.clickAvatarButton();
-            accountPage.signOut();
-            assertTrue(loginPage.isPassFieldDisplayed());
+        LoginPage loginPage = new LoginPage();
+        AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
+        accountPage.clickAvatarButton();
+        accountPage.signOut();
+        assertTrue(loginPage.isPassFieldDisplayed());
     }
 }
 
