@@ -2,13 +2,11 @@ package tests;
 
 import io.qameta.allure.AllureId;
 import io.qameta.allure.Description;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.testng.Assert;
 import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 import pages.AccountPage;
 import pages.LoginPage;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Listeners(TestListener.class)
 public class LogInTest extends BaseTest {
@@ -22,7 +20,7 @@ public class LogInTest extends BaseTest {
     void goToLoginPageAndLogIn() {
         LoginPage loginPage = new LoginPage();
         AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
-        assertTrue(accountPage.isAvatarDisplayed());
+        Assert.assertTrue(accountPage.isAvatarDisplayed());
     }
 
     @Test
@@ -33,7 +31,7 @@ public class LogInTest extends BaseTest {
         AccountPage accountPage = loginPage.logIn(USERNAME, PASSWORD);
         accountPage.clickAvatarButton();
         accountPage.signOut();
-        assertTrue(loginPage.isPassFieldDisplayed());
+        Assert.assertTrue(loginPage.isPassFieldDisplayed());
     }
 }
 

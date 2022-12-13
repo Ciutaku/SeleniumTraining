@@ -4,7 +4,7 @@
 <suite name="Yandex Test">
     <test name="Login Form Tests">
         <classes>
-            <class name="LogInTest"/>
+            <class name="tests.LogInTest"/>
         </classes>
     </test>
 </suite>

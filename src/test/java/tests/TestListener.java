@@ -1,6 +1,7 @@
 package tests;
 
 
+import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -16,8 +17,8 @@ public class TestListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult result) {
         takeScreenshot();
-        System.out.println("Browser Name is : " + ((RemoteWebDriver) driver).getCapabilities().getBrowserName());
-        System.out.println("Browser Version is : " + ((RemoteWebDriver) driver).getCapabilities().getBrowserVersion());
+        Allure.attachment("Browser Name is : ", ((RemoteWebDriver) driver).getCapabilities().getBrowserName());
+        Allure.attachment("Browser Version is : ", ((RemoteWebDriver) driver).getCapabilities().getBrowserVersion());
     }
 
     @Attachment(value = "Page Screenshot", type = "image/png")
