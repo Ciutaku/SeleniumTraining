@@ -12,17 +12,20 @@ import org.testng.ITestResult;
 import pages.WebDriverInit;
 
 public class TestListener implements ITestListener {
-    WebDriver driver = WebDriverInit.getDriver();
+    WebDriver driver = WebDriverInit.getChromeDriver();
 
     @Override
     public void onTestFailure(ITestResult result) {
         takeScreenshot();
+        java.util.Date date = new java.util.Date();
+        Allure.attachment("Time of test failure is : ", String.valueOf(date));
         Allure.attachment("Browser Name is : ", ((RemoteWebDriver) driver).getCapabilities().getBrowserName());
         Allure.attachment("Browser Version is : ", ((RemoteWebDriver) driver).getCapabilities().getBrowserVersion());
+
     }
 
     @Attachment(value = "Page Screenshot", type = "image/png")
     private byte[] takeScreenshot() {
-        return ((TakesScreenshot) WebDriverInit.getDriver()).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) WebDriverInit.getChromeDriver()).getScreenshotAs(OutputType.BYTES);
     }
 }

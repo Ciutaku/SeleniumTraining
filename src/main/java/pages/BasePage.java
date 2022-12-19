@@ -7,6 +7,6 @@ public class BasePage {
     protected WebDriver driver;
 
     public BasePage() {
-        driver = WebDriverInit.getDriver();
+        driver = WebDriverInit.getChromeDriver();
     }
 }
