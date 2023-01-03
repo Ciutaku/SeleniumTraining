@@ -3,6 +3,12 @@ package pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+
+import java.time.Duration;
+
 
 public class HomePage extends BasePage {
 
@@ -18,11 +24,25 @@ public class HomePage extends BasePage {
     @FindBy(id = "send2")
     private WebElement loginButton;
 
-    private static final String HOMEPAGE_URL = "https://magento.softwaretestingboard.com/";
-    private static final String ADDRESS_BOOK_URL = "https://magento.softwaretestingboard.com/customer/address/index/";
-    private static final String WOMEN_BOTTOM_CLOTHES_URL = "https://magento.softwaretestingboard.com/women/bottoms-women.html";
+    @FindBy(xpath = "//span[text() = 'Women']")
+    private WebElement womenTab;
+
+    @FindBy(xpath = "//span[text() = 'Bottoms']")
+    private WebElement bottomsButton;
+
+    @FindBy(xpath = "//span[text() = 'Shorts']")
+    private WebElement shortsButton;
+
+    @FindBy(xpath = "//*[contains (@data-action, 'customer-menu-toggle')]")
+    private WebElement customerMenuToggle;
+
+    @FindBy(xpath = "//a[text() = 'My Account']")
+    private WebElement myAccountButton;
+
     @FindBy(xpath = "//span[text() = 'Welcome, test account!']")
     private WebElement welcomeMessage;
+
+    public static final String HOMEPAGE_URL = "https://magento.softwaretestingboard.com/";
 
     public HomePage() {
         super();
@@ -34,13 +54,18 @@ public class HomePage extends BasePage {
     }
 
     public AddressBookPage goToAddressBook() {
-        driver.get(ADDRESS_BOOK_URL);
+        clickCustomerArrow();
+        myAccountButton.click();
+        MyAccountPage myAccountPage = new MyAccountPage();
+        myAccountPage.clickAddressBookButton();
         return new AddressBookPage();
     }
 
-    public ClothesPage goToWomenBottomClothesPage() {
-        driver.get(WOMEN_BOTTOM_CLOTHES_URL);
-        return new ClothesPage();
+    public ProductDetailPage goToWomenBottomClothesPage() {
+        hover(womenTab);
+        hover(bottomsButton);
+        shortsButton.click();
+        return new ProductDetailPage();
     }
 
     public void logIn(String username, String password) {
@@ -53,4 +78,11 @@ public class HomePage extends BasePage {
     public void goToHomePage() {
         driver.get(HOMEPAGE_URL);
     }
+
+    public void clickCustomerArrow() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        wait.until(ExpectedConditions.elementToBeClickable(customerMenuToggle)); //Needs specific wait time, couldn't find a way around it
+        customerMenuToggle.click();
+    }
+
 }

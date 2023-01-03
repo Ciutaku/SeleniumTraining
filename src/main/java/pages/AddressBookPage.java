@@ -1,5 +1,6 @@
 package pages;
 
+import dto.AddressBook;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
@@ -8,10 +9,10 @@ import org.openqa.selenium.support.ui.Select;
 
 public class AddressBookPage extends BasePage {
 
-    @FindBy(className= "add")
+    @FindBy(xpath = "//*[text() = 'Add New Address']")
     private WebElement addNewAddressButton;
 
-    @FindBy(id = "street_1")
+    @FindBy(name = "street[]")
     private WebElement firstStreetField;
 
     @FindBy(id = "city")
@@ -38,18 +39,16 @@ public class AddressBookPage extends BasePage {
     }
 
     public void addNewAddress() {
-        Actions actions = new Actions(driver);
-        actions.moveToElement(addNewAddressButton);
-        actions.perform();
+        hover(addNewAddressButton);
         addNewAddressButton.click();
-        firstStreetField.sendKeys(TestUtils.generateRandomAlphaNumericString(12));
-        cityField.sendKeys(TestUtils.generateRandomAlphabetString(9));
-        telephoneField.sendKeys(TestUtils.generateRandomNumericString(6));
-        zipCodeField.sendKeys(TestUtils.generateRandomNumericString(6));
+        AddressBook addressBook = new AddressBook();
+        firstStreetField.sendKeys(addressBook.getFirsStreet());
+        cityField.sendKeys(addressBook.getCity());
+        telephoneField.sendKeys(addressBook.getTelephoneNumber());
+        zipCodeField.sendKeys(addressBook.getZipCode());
         Select stateDropDown = new Select(regionDropDownMenu);
         stateDropDown.selectByValue("1");
-        actions.moveToElement(saveAddressButton);
-        actions.perform();
+        hover(saveAddressButton);
         saveAddressButton.click();
     }
 

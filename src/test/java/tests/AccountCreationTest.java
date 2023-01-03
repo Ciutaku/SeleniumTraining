@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.AccountCreationPage;
+import pages.MyAccountPage;
 
 @Listeners(TestListener.class)
 public class AccountCreationTest extends BaseTest {
@@ -15,8 +16,9 @@ public class AccountCreationTest extends BaseTest {
     @Description("User creates an account successfully")
     void createAccount() {
         AccountCreationPage accountCreationPage = new AccountCreationPage();
-        accountCreationPage.fillInAllDetailsAndCreateAccount();
-        Assert.assertTrue(accountCreationPage.isSuccessMessageDisplayed());
+        accountCreationPage.goToAccountCreationPage();
+        MyAccountPage myAccountPage = accountCreationPage.fillInAllDetailsAndCreateAccount();
+        Assert.assertTrue(myAccountPage.isSuccessMessageDisplayed());
     }
 }
 

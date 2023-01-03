@@ -8,11 +8,10 @@ import org.testng.annotations.Test;
 import pages.AddressBookPage;
 import pages.HomePage;
 
+import static tests.Const.*;
+
 @Listeners(TestListener.class)
 public class AddressBookTest extends BaseTest {
-
-    private static final String EMAIL = "task160email@gmail.com";
-    private static final String PASSWORD = "Tester123";
 
     @Test
     @AllureId("3")

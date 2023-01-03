@@ -9,10 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import pages.WebDriverInit;
+import driver.Driver;
 
 public class TestListener implements ITestListener {
-    WebDriver driver = WebDriverInit.getChromeDriver();
+    WebDriver driver = Driver.getDriver();
 
     @Override
     public void onTestFailure(ITestResult result) {
@@ -26,6 +26,6 @@ public class TestListener implements ITestListener {
 
     @Attachment(value = "Page Screenshot", type = "image/png")
     private byte[] takeScreenshot() {
-        return ((TakesScreenshot) WebDriverInit.getChromeDriver()).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 }

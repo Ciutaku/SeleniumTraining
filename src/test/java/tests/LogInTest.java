@@ -7,11 +7,10 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.HomePage;
 
+import static tests.Const.*;
+
 @Listeners(TestListener.class)
 public class LogInTest extends BaseTest {
-
-    private static final String EMAIL = "task160email@gmail.com";
-    private static final String PASSWORD = "Tester123";
 
     @Test
     @AllureId("2")

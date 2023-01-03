@@ -9,15 +9,15 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import java.util.Random;
 
-public class ClothesPage extends BasePage {
+public class ProductDetailPage extends BasePage {
 
-    @FindBy(className = "product-item")
+    @FindBy(css = ".product-items .product-item")
     private List<WebElement> product;
 
-    @FindBy(xpath = "//span[text() = 'Add to Wish List']")
+    @FindBy(css = ".towishlist")
     private WebElement wishListButton;
 
-    @FindBy(xpath = "//div[contains(text(), ' has been added to your Wish List.')]")
+    @FindBy(css = ".message-success")
     private WebElement successMessage;
 
     @FindBy(id = "product-addtocart-button")
@@ -29,20 +29,18 @@ public class ClothesPage extends BasePage {
     @FindBy(xpath = "//div[contains (@id, 'option-label-color')]")
     private WebElement colorOption;
 
-    private static final String CART_URL = "https://magento.softwaretestingboard.com/checkout/cart/";
-
     @FindBy(xpath = "counter-number")
     private WebElement cartAmount;
 
-    @FindBy(xpath = "//*[@id='shopping-cart-table']/tbody/tr[1]/td[4]/span/span/span")
+    @FindBy(css = ".subtotal .cart-price .price")
     private List<WebElement> productSubtTotalCartPrice;
 
-    @FindBy(className = "grand")
+    @FindBy(css = ".grand .price")
     private WebElement orderTotal;
 
-    Actions actions = new Actions(WebDriverInit.getChromeDriver());
+    private static final String CART_URL = "https://magento.softwaretestingboard.com/checkout/cart/";
 
-    public ClothesPage() {
+    public ProductDetailPage() {
         super();
         PageFactory.initElements(driver, this);
     }
@@ -54,25 +52,18 @@ public class ClothesPage extends BasePage {
 
     public void clickOnARandomProduct() {
         Random random = new Random();
+        Actions actions = new Actions(driver);
         WebElement randomProduct = product.get(random.nextInt(product.size() - 1));
         actions.moveToElement(randomProduct).click().perform();
     }
+
     public boolean isSuccessMessageDisplayed() {
         return successMessage.isDisplayed();
     }
 
-    public boolean isCorrectTotalPriceDisplayed() {
-        double totalAmountExpected = 0;
-        for (WebElement productPrice : productSubtTotalCartPrice) {
-            double productDouble = Double.parseDouble(productPrice.getText().replaceAll("[,$]", ""));
-            totalAmountExpected += productDouble;
-        }
-        return (totalAmountExpected == Double.parseDouble(orderTotal.getText().replaceAll("[A-Za-z,$]", "")));
-    }
-
-    public void addThreeDifferentItemsToCart(HomePage homePage) {
-        for (int i = 0; i < 3; i++) {
-            actions.moveToElement(product.get(i)).click().perform();
+    public void addItemsToCart(HomePage homePage, int numberOfItems) {
+        for (int i = 0; i < numberOfItems; i++) {
+            product.get(i).click();
             sizeOption.click();
             colorOption.click();
             addToCart.click();
@@ -80,7 +71,8 @@ public class ClothesPage extends BasePage {
         }
     }
 
-    public void goToMyCart() {
-        driver.get(CART_URL);
+    public CartPage goToMyCart() {
+        driver.get(CART_URL); //Need to use direct URL instead of clicking cart, as it does not update itself with added items possibly due to caching
+        return new CartPage();
     }
 }
