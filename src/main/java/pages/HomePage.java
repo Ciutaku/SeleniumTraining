@@ -6,11 +6,12 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
 import java.time.Duration;
 
 
 public class HomePage extends BasePage {
+
+    private Header header;
 
     @FindBy(xpath = "//a[contains (text(), 'Sign In ')]")
     private WebElement signInButton;
@@ -49,6 +50,10 @@ public class HomePage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public Header getHeader() {
+        return new Header();
+    }
+
     public boolean isWelcomeMessageDisplayed() {
         return welcomeMessage.isDisplayed();
     }
@@ -59,13 +64,6 @@ public class HomePage extends BasePage {
         MyAccountPage myAccountPage = new MyAccountPage();
         myAccountPage.clickAddressBookButton();
         return new AddressBookPage();
-    }
-
-    public ProductDetailPage goToWomenBottomClothesPage() {
-        hover(womenTab);
-        hover(bottomsButton);
-        shortsButton.click();
-        return new ProductDetailPage();
     }
 
     public void logIn(String username, String password) {

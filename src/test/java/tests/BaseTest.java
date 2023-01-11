@@ -11,6 +11,8 @@ import java.time.Duration;
 
 public class BaseTest {
 
+    protected HomePage homePage;
+
     @BeforeMethod
     public void setup() {
         Driver.getDriver().manage().window().maximize();
@@ -23,8 +25,8 @@ public class BaseTest {
         Driver.tearDown();
     }
 
-    public void goToHomePage() {
-        HomePage homePage = new HomePage();
+    private void goToHomePage() {
+        homePage = new HomePage();
         homePage.goToHomePage();
     }
 }

@@ -20,9 +20,6 @@ import static driver.Config.*;
 
 public class Driver {
 
-    // 'mvn clean -Dbrowser=firefox test ' command line contains a parameter  for determining the browser type. The
-    // same for remote:  '-Dremote=http://test:test-password@GRID-HOST:4444/wd/hub'
-
     private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     private Driver() {

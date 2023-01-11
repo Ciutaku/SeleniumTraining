@@ -9,7 +9,11 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import java.util.Random;
 
+import static helper.Const.WOMEN_CATEGORY;
+
 public class ProductDetailPage extends BasePage {
+
+    private Header header;
 
     @FindBy(css = ".product-items .product-item")
     private List<WebElement> product;
@@ -45,6 +49,10 @@ public class ProductDetailPage extends BasePage {
         PageFactory.initElements(driver, this);
     }
 
+    public Header getHeader() {
+        return new Header();
+    }
+
     public void addAnItemToWishlist() {
         clickOnARandomProduct();
         wishListButton.click();
@@ -61,13 +69,13 @@ public class ProductDetailPage extends BasePage {
         return successMessage.isDisplayed();
     }
 
-    public void addItemsToCart(HomePage homePage, int numberOfItems) {
+    public void addItemsToCart(int numberOfItems) {
         for (int i = 0; i < numberOfItems; i++) {
             product.get(i).click();
             sizeOption.click();
             colorOption.click();
             addToCart.click();
-            homePage.goToWomenBottomClothesPage();
+            getHeader().chooseMenu(WOMEN_CATEGORY);
         }
     }
 
