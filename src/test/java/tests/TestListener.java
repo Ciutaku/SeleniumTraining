@@ -9,20 +9,22 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import pages.WebDriverInit;
+import driver.Driver;
 
 public class TestListener implements ITestListener {
-    WebDriver driver = WebDriverInit.getDriver();
 
     @Override
     public void onTestFailure(ITestResult result) {
         takeScreenshot();
-        Allure.attachment("Browser Name is : ", ((RemoteWebDriver) driver).getCapabilities().getBrowserName());
-        Allure.attachment("Browser Version is : ", ((RemoteWebDriver) driver).getCapabilities().getBrowserVersion());
+        java.util.Date date = new java.util.Date();
+        Allure.attachment("Time of test failure is : ", String.valueOf(date));
+        Allure.attachment("Browser Name is : ", ((RemoteWebDriver) Driver.getDriver()).getCapabilities().getBrowserName());
+        Allure.attachment("Browser Version is : ", ((RemoteWebDriver) Driver.getDriver()).getCapabilities().getBrowserVersion());
+
     }
 
     @Attachment(value = "Page Screenshot", type = "image/png")
     private byte[] takeScreenshot() {
-        return ((TakesScreenshot) WebDriverInit.getDriver()).getScreenshotAs(OutputType.BYTES);
+        return ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 }

@@ -1,21 +1,32 @@
 package tests;
 
-
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pages.LoginPage;
-import pages.WebDriverInit;
+import pages.HomePage;
+import driver.Driver;
+
+import java.time.Duration;
+
 
 public class BaseTest {
 
+    protected HomePage homePage;
+
     @BeforeMethod
-    void goToLoginPage() {
-        LoginPage loginPage = new LoginPage();
-        loginPage.goToLogInPage();
+    public void setup() {
+        Driver.getDriver().manage().window().maximize();
+        Driver.getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        goToHomePage();
     }
 
     @AfterMethod
-    void tearDown() {
-        WebDriverInit.cleanUp();
+    public void teardown(ITestResult result) {
+        Driver.tearDown();
+    }
+
+    private void goToHomePage() {
+        homePage = new HomePage();
+        homePage.goToHomePage();
     }
 }
